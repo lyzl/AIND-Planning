@@ -134,10 +134,10 @@ class AirCargoProblem(Problem):
                 if clause not in kb.clauses:
                     is_possible = False
             for clause in action.precond_neg:
-                if clause in kb.clauses:
+                if clause not in kb.clauses:
                     is_possible = False
             if is_possible:
-                possible_actions.append(action)
+              possible_actions.append(action)
         return possible_actions
 
     def result(self, state: str, action: Action):
@@ -248,7 +248,7 @@ def air_cargo_p2() -> AirCargoProblem:
            expr('At(C3, ATL)'),
            expr('At(P1, SFO)'),
            expr('At(P2, JFK)'),
-           expr('At(P3, ATL)'),
+           expr('At(P2, ATL)'),
            ]
     neg = [expr('At(C3, SFO)'),
            expr('At(C3, JFK)'),
@@ -272,13 +272,13 @@ def air_cargo_p2() -> AirCargoProblem:
            expr('At(P1, ATL)'),
            expr('At(P2, SFO)'),
            expr('At(P2, ATL)'),
-           expr('At(P3, JFK)'),
-           expr('At(P3, SFO)'),
+           expr('At(P2, JFK)'),
+           expr('At(P2, SFO)'),
            ]
     init = FluentState(pos, neg)
     goal = [expr('At(C1, JFK)'),
             expr('At(C2, SFO)'),
-            expr('At(C3, SFO)'),
+            expr('At(C2, ATL)'),
             ]
     return AirCargoProblem(cargos, planes, airports, init, goal)
 
